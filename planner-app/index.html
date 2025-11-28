@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Put Planner</title>
+    <meta name="description" content="An aesthetic weekly planner to keep tasks tidy.">
+    <link rel="apple-touch-icon" href="/pwa-192x192.svg">
+    <meta name="theme-color" content="#111827" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+      }
+      @keyframes move-aurora-1 {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(100px, 50px) scale(1.2); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+      @keyframes move-aurora-2 {
+        0% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(-80px, 60px) scale(1.1); }
+        100% { transform: translate(0, 0) scale(1); }
+      }
+      .animate-aurora-1 {
+        animation: move-aurora-1 20s infinite ease-in-out;
+      }
+      .animate-aurora-2 {
+        animation: move-aurora-2 25s infinite ease-in-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
