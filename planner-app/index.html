@@ -50,33 +50,132 @@
       .animate-aurora-2 {
         animation: move-aurora-2 25s infinite ease-in-out;
       }
-      /* Custom number input spinner buttons */
-      input[type="number"]::-webkit-outer-spin-button {
-        background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%);
-        border: none;
-        width: 16px;
-        height: 50%;
-        cursor: pointer;
-        transition: background 0.2s ease;
+      /* Interactive Animations */
+      @keyframes pulse-timer {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
       }
-      input[type="number"]::-webkit-inner-spin-button {
-        background: linear-gradient(135deg, #4338ca 0%, #7c3aed 100%);
-        border: none;
-        width: 16px;
-        height: 50%;
-        cursor: pointer;
-        transition: background 0.2s ease;
+      @keyframes slide-in-up {
+        from {
+          transform: translateY(20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
       }
-      input[type="number"]::-webkit-outer-spin-button:hover,
-      input[type="number"]::-webkit-inner-spin-button:hover {
-        background: linear-gradient(135deg, #3730a3 0%, #6d28d9 100%);
+      @keyframes slide-in-left {
+        from {
+          transform: translateX(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
       }
-      input[type="number"]::-webkit-outer-spin-button:active,
-      input[type="number"]::-webkit-inner-spin-button:active {
-        background: linear-gradient(135deg, #312e81 0%, #581c87 100%);
+      @keyframes bounce-in {
+        0% {
+          transform: scale(0.3);
+          opacity: 0;
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        70% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
+        }
       }
-      input[type="number"] {
-        -moz-appearance: textfield;
+      @keyframes glow {
+        0%,
+        100% {
+          box-shadow: 0 0 5px rgba(99, 102, 241, 0.5);
+        }
+        50% {
+          box-shadow: 0 0 20px rgba(99, 102, 241, 0.8),
+            0 0 30px rgba(139, 92, 246, 0.6);
+        }
+      }
+      @keyframes task-complete {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.1);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+      @keyframes button-press {
+        0% {
+          transform: scale(1);
+        }
+        100% {
+          transform: scale(0.95);
+        }
+      }
+      @keyframes card-hover {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-5px);
+        }
+      }
+      .animate-pulse-timer {
+        animation: pulse-timer 2s infinite;
+      }
+      .animate-slide-in-up {
+        animation: slide-in-up 0.6s ease-out;
+      }
+      .animate-slide-in-left {
+        animation: slide-in-left 0.6s ease-out;
+      }
+      .animate-bounce-in {
+        animation: bounce-in 0.8s ease-out;
+      }
+      .animate-glow {
+        animation: glow 2s infinite;
+      }
+      .animate-task-complete {
+        animation: task-complete 0.6s ease-out;
+      }
+      .animate-button-press {
+        animation: button-press 0.1s ease-out;
+      }
+      .animate-card-hover {
+        animation: card-hover 0.3s ease-out;
+      }
+      /* Enhanced hover effects */
+      .hover-scale {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+      .hover-scale:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      }
+      .hover-glow {
+        transition: box-shadow 0.3s ease;
+      }
+      .hover-glow:hover {
+        box-shadow: 0 0 20px rgba(99, 102, 241, 0.6);
+      }
+      .hover-lift {
+        transition: transform 0.3s ease;
+      }
+      .hover-lift:hover {
+        transform: translateY(-2px);
       }
     </style>
   </head>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 // Icons
 const IconPlus = () => (
@@ -91,6 +92,7 @@ export default function PutPlannerRevamped() {
   const [data, setData] = useState(emptyWeek);
   const [loading, setLoading] = useState(true);
   const [saveStatus, setSaveStatus] = useState("saved");
+  const [animatingTask, setAnimatingTask] = useState(null);
 
   // Load from localStorage
   useEffect(() => {
@@ -150,6 +152,11 @@ export default function PutPlannerRevamped() {
   };
 
   const toggleDone = (day, id) => {
+    const task = data.days[day].find((t) => t.id === id);
+    if (task && !task.done) {
+      setAnimatingTask(id);
+      setTimeout(() => setAnimatingTask(null), 600);
+    }
     setData((d) => ({
       ...d,
       days: {
@@ -294,7 +301,7 @@ export default function PutPlannerRevamped() {
             {/* Meta Card */}
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 shadow-lg shadow-indigo-100/50 border border-white/20 hover:shadow-xl hover:shadow-indigo-200/50 transition-all duration-300">
               <input
-                className="w-full text-lg font-bold outline-none placeholder-slate-400 text-white bg-transparent border-b-2 border-transparent focus:border-indigo-500 transition-colors pb-2 mb-3"
+                className="w-full text-lg font-bold outline-none placeholder-slate-400 text-white bg-transparent border-b-2 border-transparent focus:border-indigo-500 transition-all pb-2 mb-3 hover-lift"
                 placeholder="Week 7"
                 value={data.meta.weekLabel}
                 onChange={(e) =>
@@ -342,12 +349,16 @@ export default function PutPlannerRevamped() {
             </div>
 
             {/* Timer Card */}
-            <div className="bg-gradient-to-br from-indigo-700 to-violet-800 rounded-2xl p-5 shadow-lg shadow-indigo-500/50 text-white">
+            <div
+              className={`bg-gradient-to-br from-indigo-700 to-violet-800 rounded-2xl p-5 shadow-lg shadow-indigo-500/50 text-white`}
+            >
               <h3 className="text-sm font-semibold mb-3 opacity-90">
                 Pomodoro Timer
               </h3>
               <div className="text-center mb-4">
-                <div className="text-4xl sm:text-5xl font-mono font-bold tracking-tight mb-1">
+                <div
+                  className={`text-4xl sm:text-5xl font-mono font-bold tracking-tight mb-1`}
+                >
                   {fmt(secondsLeft)}
                 </div>
                 <div className="text-xs font-medium opacity-80">
@@ -362,7 +373,7 @@ export default function PutPlannerRevamped() {
                     setRunning(false);
                     setSecondsLeft(30 * 60);
                   }}
-                  className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm"
+                  className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-all backdrop-blur-sm hover-scale hover-glow"
                 >
                   30/5
                 </button>
@@ -373,7 +384,7 @@ export default function PutPlannerRevamped() {
                     setRunning(false);
                     setSecondsLeft(40 * 60);
                   }}
-                  className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm"
+                  className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-all backdrop-blur-sm hover-scale hover-glow"
                 >
                   40/5
                 </button>
@@ -383,14 +394,14 @@ export default function PutPlannerRevamped() {
                   type="number"
                   value={customWork}
                   onChange={(e) => setCustomWork(e.target.value)}
-                  className="w-full p-2 text-sm rounded-lg bg-white/5 outline-none border border-white/10 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-white"
+                  className="w-2/5 p-2 text-sm rounded-lg bg-white/5 outline-none border border-white/10 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-white"
                   placeholder="Work"
                 />
                 <input
                   type="number"
                   value={customBreak}
                   onChange={(e) => setCustomBreak(e.target.value)}
-                  className="w-full p-2 text-sm rounded-lg bg-white/5 outline-none border border-white/10 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-white"
+                  className="w-2/5 p-2 text-sm rounded-lg bg-white/5 outline-none border border-white/10 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-white"
                   placeholder="Break"
                 />
                 <button
@@ -403,7 +414,7 @@ export default function PutPlannerRevamped() {
                     setRunning(false);
                     setSecondsLeft(customWork * 60);
                   }}
-                  className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm"
+                  className="w-1/5 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm"
                 >
                   Set
                 </button>
@@ -475,7 +486,7 @@ export default function PutPlannerRevamped() {
                 return (
                   <div
                     key={day}
-                    className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg shadow-slate-700/50 border border-white/20 overflow-hidden hover:shadow-xl hover:shadow-indigo-500/50 transition-all duration-300 flex flex-col"
+                    className="bg-white/10 backdrop-blur-sm rounded-2xl shadow-lg shadow-slate-700/50 border border-white/20 overflow-hidden hover:shadow-xl hover:shadow-indigo-500/50 transition-all duration-300 flex flex-col hover-scale animate-slide-in-up"
                   >
                     <div className="bg-gradient-to-r from-indigo-700 to-violet-800 p-3">
                       <h4 className="font-bold text-white capitalize text-base">
@@ -492,42 +503,56 @@ export default function PutPlannerRevamped() {
                     </div>
 
                     <div className="p-4 space-y-2 flex-1">
-                      {data.days[day].map((t) => (
-                        <div
-                          key={t.id}
-                          className={`flex items-center gap-2 p-2 rounded-lg group transition-all duration-200 ${
-                            t.done ? "bg-green-500/10" : "hover:bg-white/5"
-                          }`}
-                        >
-                          <button
-                            onClick={() => toggleDone(day, t.id)}
-                            className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
-                              t.done
-                                ? "bg-green-500 border-green-500"
-                                : "border-gray-400 hover:border-indigo-400"
-                            }`}
+                      <TransitionGroup>
+                        {data.days[day].map((t) => (
+                          <CSSTransition
+                            key={t.id}
+                            timeout={300}
+                            classNames="task"
                           >
-                            {t.done && <IconCheck />}
-                          </button>
-                          <input
-                            className={`flex-1 bg-transparent outline-none text-sm font-medium min-w-0 ${
-                              t.done
-                                ? "text-gray-400 line-through"
-                                : "text-gray-100"
-                            }`}
-                            value={t.label}
-                            onChange={(e) =>
-                              updateTask(day, t.id, { label: e.target.value })
-                            }
-                          />
-                          <button
-                            className="opacity-0 group-hover:opacity-100 text-red-400 hover:bg-white/10 p-1 rounded transition-all"
-                            onClick={() => removeTask(day, t.id)}
-                          >
-                            <IconTrash />
-                          </button>
-                        </div>
-                      ))}
+                            <div
+                              data-task-id={t.id}
+                              className={`flex items-center gap-2 p-2 rounded-lg group transition-all duration-200 ${
+                                t.done ? "bg-green-500/10" : "hover:bg-white/5"
+                              } ${
+                                animatingTask === t.id
+                                  ? "animate-task-complete"
+                                  : ""
+                              }`}
+                            >
+                              <button
+                                onClick={() => toggleDone(day, t.id)}
+                                className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-all ${
+                                  t.done
+                                    ? "bg-green-500 border-green-500"
+                                    : "border-gray-400 hover:border-indigo-400"
+                                }`}
+                              >
+                                {t.done && <IconCheck />}
+                              </button>
+                              <input
+                                className={`flex-1 bg-transparent outline-none text-sm font-medium min-w-0 ${
+                                  t.done
+                                    ? "text-gray-400 line-through"
+                                    : "text-gray-100"
+                                }`}
+                                value={t.label}
+                                onChange={(e) =>
+                                  updateTask(day, t.id, {
+                                    label: e.target.value,
+                                  })
+                                }
+                              />
+                              <button
+                                className="opacity-0 group-hover:opacity-100 text-red-400 hover:bg-white/10 p-1 rounded transition-all"
+                                onClick={() => removeTask(day, t.id)}
+                              >
+                                <IconTrash />
+                              </button>
+                            </div>
+                          </CSSTransition>
+                        ))}
+                      </TransitionGroup>
                     </div>
 
                     <div className="p-3 border-t border-white/10">
