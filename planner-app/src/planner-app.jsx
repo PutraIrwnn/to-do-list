@@ -97,7 +97,9 @@ export default function PutPlannerRevamped() {
     const loadData = async () => {
       try {
         // Simulate the async-object structure the user's code expects
-        const result = await Promise.resolve({ value: localStorage.getItem("put_planner_v4") });
+        const result = await Promise.resolve({
+          value: localStorage.getItem("put_planner_v4"),
+        });
         if (result && result.value) {
           setData(JSON.parse(result.value));
         }
