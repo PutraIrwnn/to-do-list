@@ -206,6 +206,8 @@ export default function PutPlannerRevamped() {
   const [secondsLeft, setSecondsLeft] = useState(timerMode.work);
   const [running, setRunning] = useState(false);
   const [isWork, setIsWork] = useState(true);
+  const [customWork, setCustomWork] = useState(30);
+  const [customBreak, setCustomBreak] = useState(5);
 
   useEffect(() => {
     let t;
@@ -372,6 +374,36 @@ export default function PutPlannerRevamped() {
                   className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm"
                 >
                   40/5
+                </button>
+              </div>
+              <div className="flex gap-2 mb-3">
+                <input
+                  type="number"
+                  value={customWork}
+                  onChange={(e) => setCustomWork(e.target.value)}
+                  className="w-full p-2 text-sm rounded-lg bg-white/5 outline-none border border-white/10 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-white"
+                  placeholder="Work"
+                />
+                <input
+                  type="number"
+                  value={customBreak}
+                  onChange={(e) => setCustomBreak(e.target.value)}
+                  className="w-full p-2 text-sm rounded-lg bg-white/5 outline-none border border-white/10 focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all text-white"
+                  placeholder="Break"
+                />
+                <button
+                  onClick={() => {
+                    setTimerMode({
+                      work: customWork * 60,
+                      break: customBreak * 60,
+                    });
+                    setIsWork(true);
+                    setRunning(false);
+                    setSecondsLeft(customWork * 60);
+                  }}
+                  className="flex-1 py-1.5 text-xs font-semibold bg-white/10 hover:bg-white/20 rounded-lg transition-colors backdrop-blur-sm"
+                >
+                  Set
                 </button>
               </div>
               <button
